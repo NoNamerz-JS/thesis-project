@@ -1,7 +1,7 @@
-# thesis-project
+## thesis-project
 ## autor: Andrei Bogdan
 # project-status: [unrelised]
 
-v0.0.1
+[v0.0.1](index.html)
 
 [CHANGELOG](CHANGELOG.md)
