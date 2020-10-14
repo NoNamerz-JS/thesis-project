@@ -2,6 +2,6 @@
 ## autor: Andrei Bogdan
 # project-status: [unrelised]
 
-[v0.0.1](index.html)
+[v0.1.0](index.html)
 
 [CHANGELOG](CHANGELOG.md)

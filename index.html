@@ -3,11 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>thesis-project</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="CSS/thesis.css">
-  <script src="JavaScript/thesis.js"></script>  
+  <title>Thesis_project</title>
 </head>
-<body>  
-
+<body onload="startTime(); start_highcharts()">
+<div class="container-fluid p-0 m-0">
+  <div class="header row ml-5 mr-5 mt-4 mb-2 pt-3 pb-3">
+    <div class="col">
+      <img class="logo" src="img/logo.svg" alt="logo" title="logo"><span class="logo_name">MoneyTree</span>
+    </div>
+    <div class="date_and_time col"></div>
+    <div class="menu col text-right">menu</div>
+  </div>
+  <div class="five_blocks-fluid pt-2 pb-2">
+    <div class="row ml-5 mr-5 mt-2 mb-2">
+      <div class="income_block col mb-3 mr-2 pt-3 pb-3">
+        <div class="income_block_name">income</div>
+      </div>
+      <div class="consumption_block col ml-2 mb-3 pt-3 pb-3">
+        <div class="consumption_block_name text-right">consumption</div>
+      </div>
+      <div class="w-100"></div>
+      <div class="accumulation_block col mr-2 pt-3 pb-3">
+        <div class="accumulation_block_name">accumulation</div>
+      </div>
+  <div class="cur_block col ml-2 pt-3 pb-3">
+    <div class="radio_cur row ml-5">
+      <form name="all_cur">
+        <input type="radio" id="US" name="currency" value="145" checked>
+        <label for="US">U.S. dollar</label>
+        <input type="radio" id="EU" name="currency" value="292">
+        <label for="EU">EURO</label>
+        <input type="radio" id="RUB" name="currency" value="298">
+        <label for="RUB">100 RUB</label>
+      </form>
+      <span class="cur_block_name col text-right">exchange rates</span>
+    </div>
+  <div class="date_range text-left ml-5 mt-0">
+    <label for="start">Start date:</label>
+    <input type="date" id="start" name="trip-start"
+       value="">
+    <label for="start">End date:</label>
+    <input type="date" id="end" name="trip-end"
+        value="">
+    <input type="button" OnClick="start_highcharts()" id="datebtn" value="submit">
+  </div>
+  <figure class="highcharts-figure row">
+    <div id="container"></div>
+  </figure>
+  </div>
+</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.8.36/dayjs.min.js"></script>
+<script src="JavaScript/date_and_time.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="JavaScript/Highcharts.js"></script>
+<script src="JavaScript/WebWorker.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 </html>
