@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="CSS/thesis.css">
   <title>Thesis_project</title>
 </head>
-<body onload="startTime(); start_highcharts()">
+<body onload="startTime(); start_highcharts(); inc_con()">
 <div class="container-fluid p-0 m-0">
   <div class="header row ml-5 mr-5 mt-4 mb-2 pt-3 pb-3">
     <div class="col">
@@ -19,18 +19,106 @@
   <div class="five_blocks-fluid pt-2 pb-2">
     <div class="row ml-5 mr-5 mt-2 mb-2">
       <div class="income_block col mb-3 mr-2 pt-3 pb-3">
-        <div class="income_block_name">income</div>
+        <div class="income_block_name row pb-3 pl-3 pr-0">income/consumption</div>
+        <div class="input_income_consuption mt-4">
+          <div class="ml-2">Adding an amount of income and consumption</div>
+          <div class="row mt-3 mb-3 ml-1">
+            <input type="date" id="item_date" name="trip-start" class="enter_date mr-4 col-3" value="">
+            <input type="number" id="Amount" value="" class="form-control col-2 enter_date row" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping">
+            <div class="form-group col-2 ml-4 p-0">
+              <select id="inputState" class="form-control enter_date" value="">
+                <option id="inc_selected" selected>Income</option>
+                <option id="cons_selected">Consumption</option>
+              </select>
+            </div>
+            <!-- <div class="form-group col-2 ml-2 p-0">
+              <select id="inputCategory" class="form-control enter_date">
+                <option selected>Category</option>
+                <option>bla</option>
+              </select>
+            </div> -->
+            <input type="button" OnClick="to_localStorage_inc_cons()" id="datebtn_form" value="submit" class="confirm_button_style col-2 ml-2">
+          </div>
+        </div>
+        <div class="row mb-3 ml-2">
+          <form name="all_state">
+            <input type="radio" id="inc" name="currency" value="inc" checked>
+            <label for="inc">Income</label>
+            <input type="radio" id="cons" name="currency" value="cons">
+            <label for="cons">Consumption</label>
+          </form>
+          <input type="button" OnClick="inc_con()" id="datebtn" value="show" class="confirm_button_style col-2 ml-2">
+        </div>
+        <figure class="highcharts-figure row">
+          <div id="container_form" class="col-11"></div>
+        </figure>
       </div>
       <div class="consumption_block col ml-2 mb-3 pt-3 pb-3">
-        <div class="consumption_block_name text-right">consumption</div>
+        <div class="consumption_block_name justify-content-end row pb-3 pr-3">consumption</div>
       </div>
       <div class="w-100"></div>
       <div class="accumulation_block col mr-2 pt-3 pb-3">
-        <div class="accumulation_block_name">accumulation</div>
+        <div class="accumulation_block_name row pb-3 pl-3 pr-0">accumulation</div>
+        <div class="accumulation_all_currency row ml-2 mt-4">
+          <div class="accumulation_US pr-5">U.S. dollar
+            <div class="w-100 mb-2"></div>
+            <div class="row ml-0">
+              <div class="mr-2">Data</div>
+              <div class="mr-2">Amount</div>
+              <div>Rate</div>
+            </div>
+          </div>
+          <div class="accumulation_EURO ml-5">EURO
+            <div class="w-100 mb-2"></div>
+            <div class="row ml-0">
+              <div class="mr-2">Data</div>
+              <div class="mr-2">Amount</div>
+              <div>Rate</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3 mb-3 ml-1">
+            <input type="date" id="accumulation_item_date" name="trip-start" class="enter_date mr-4 col-3" value="">
+            <input type="number" id="accumulation_Amount" value="" class="form-control col-2 enter_date row" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping">
+            <div class="form-group col-2 mb-3 ml-4 p-0">
+              <select id="accumulation_inputState" class="form-control enter_date" value="">
+                <option id="accumulation_inc_selected" selected="">U.S. dollar</option>
+                <option id="accumulation_cons_selected">EURO</option>
+              </select>
+            </div>
+            <input type="button" onclick="" id="accumulation_datebtn_form" value="add" class="confirm_button_style col-2 ml-2">
+            <div class="w-100"></div>
+            <input type="button" onclick="" id="accumulation_datebtn_show" value="show" class="confirm_button_style col-2 ml-0">
+          </div>
+        <figure class="highcharts-figure row">
+          <div id="accumulation_container" class="col-11"></div>
+        </figure>
       </div>
   <div class="cur_block col ml-2 pt-3 pb-3">
+    <div class="cur_block_name row pb-3 pr-3 justify-content-end">exchange rates</div>
     <div class="radio_cur row ml-5">
-      <form name="all_cur">
+      <div class="w-100"></div>
+        <div class="col">
+        <div class="detailed_rate_block pb-4 row justify-content-end">
+          <div class="detailed_rate_block_USD mt-4 row justify-content-center">U.S. dollar
+            <div class="w-100 mb-2"></div>
+            <div id="detailed_rate_block_USD_info" class="detailed_rate_block_style"></div>
+            <sup id="difference_rate_USD"></sup>
+          </div>
+          <div class="detailed_rate_block_EURO mt-4 pl-4 row justify-content-center">EURO
+            <div class="w-100 mb-2"></div>
+              <div id="detailed_rate_block_EURO_info" class="detailed_rate_block_style"></div>
+              <sup id="difference_rate_EURO"></sup>
+          </div>
+          <div class="detailed_rate_block_RUB mt-4 pl-3 mr-5 row justify-content-center">100 RUB
+            <div class="w-100 mb-2"></div>
+              <div id="detailed_rate_block_RUB_info" class="detailed_rate_block_style"></div>
+              <sup id="difference_rate_RUB"></sup>
+          </div>
+        </div>
+      </div>
+      <div class="w-100"></div>
+      <form name="all_cur" class="mb-2">
         <input type="radio" id="US" name="currency" value="145" checked>
         <label for="US">U.S. dollar</label>
         <input type="radio" id="EU" name="currency" value="292">
@@ -38,19 +126,16 @@
         <input type="radio" id="RUB" name="currency" value="298">
         <label for="RUB">100 RUB</label>
       </form>
-      <span class="cur_block_name col text-right">exchange rates</span>
     </div>
-  <div class="date_range text-left ml-5 mt-0">
+  <div class="date_range text-left ml-5 mt-0 mb-3">
     <label for="start">Start date:</label>
-    <input type="date" id="start" name="trip-start"
-       value="">
+    <input type="date" id="start" name="trip-start" class="enter_date col-3" value="">
     <label for="start">End date:</label>
-    <input type="date" id="end" name="trip-end"
-        value="">
-    <input type="button" OnClick="start_highcharts()" id="datebtn" value="submit">
+    <input type="date" id="end" name="trip-end" class="enter_date col-3" value="">
+    <input type="button" OnClick="start_highcharts()" id="datebtn" value="submit" class="confirm_button_style col-2 ml-2">
   </div>
   <figure class="highcharts-figure row">
-    <div id="container"></div>
+    <div id="container" class="col-11"></div>
   </figure>
   </div>
 </div>
@@ -59,8 +144,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.8.36/dayjs.min.js"></script>
 <script src="JavaScript/date_and_time.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="JavaScript/Highcharts.js"></script>
 <script src="JavaScript/WebWorker.js"></script>
+<script src="JavaScript/Highcharts.js"></script>
+<script src="JavaScript/to_localStorage_inc_cons.js"></script>
+<script src="JavaScript/Highcharts_inc_cons.js"></script>
+<script src="JavaScript/Cur_rates.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
