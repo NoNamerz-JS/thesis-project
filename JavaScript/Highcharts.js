@@ -1,6 +1,7 @@
 function start_highcharts() {
   let month_ago = dayjs().subtract(1, 'month').format('YYYY-MM-DD');
   let today = dayjs().format('YYYY-MM-DD');
+
   const selected = Array.from(document.forms["all_cur"])
     .filter(option => option.checked)
     .map(option => option.defaultValue);
@@ -15,8 +16,8 @@ function start_highcharts() {
   }
 
   const urlData = 'https://www.nbrb.by/API/ExRates/Rates/Dynamics/' + selected + '?startDate=' + month_ago +'&endDate=' + today;
-  const worker = new Worker('JavaScript/WebWorker.js');
 
+  const worker = new Worker('JavaScript/WebWorker.js');
   worker.postMessage(urlData);
 
   worker.onmessage = function(e) {
@@ -68,6 +69,7 @@ function start_highcharts() {
   						type: 'area',
           		name: '',
               		data,
+
           	}]
       	});
   }
