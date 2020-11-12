@@ -2,6 +2,21 @@ body {
   color: #D1E7FF;
   background: #1E202F;
 }
+
+@import 'https://code.highcharts.com/css/highcharts.css';
+
+::-webkit-scrollbar {
+    width: 1rem;
+}
+::-webkit-scrollbar-thumb {
+    border: 1px solid #181c25;
+    background: #232936;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-track {
+    background: #181c25;
+    box-shadow: inset 0 0 5px #12171c;
+}
 .header, .income_block, .consumption_block, .accumulation_block, .cur_block {
   background: linear-gradient(249.12deg, #272740 0%, #26263F 100%), #272741;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.07);
@@ -20,43 +35,91 @@ body {
   font-weight: 200;
   font-size: 14px;
 }
+.detailed_rate_block_style {
+  font-size: 20px;
+  line-height: 17px;
+}
+.difference_rate_color_up {
+  color: rgba(43, 244, 153, 1);
+}
+.difference_rate_color_down {
+  color: rgba(236, 74, 42, 1);
+}
 .date_and_time {
   text-align: center;
   font-size: 20px;
   font-weight: 200;
 }
-.income_block {
-  -webkit-mask-image: radial-gradient(circle at right bottom, transparent 0, transparent 40px, black 41px);
-}
-.consumption_block {
-  -webkit-mask-image: radial-gradient(circle at left bottom, transparent 0, transparent 40px, black 41px);
-}
-.accumulation_block {
-  -webkit-mask-image: radial-gradient(circle at right top, transparent 0, transparent 40px, black 41px);
-}
-.cur_block {
-  -webkit-mask-image: radial-gradient(circle at left top, transparent 0, transparent 40px, black 41px);
-}
-rect {
-  fill: none;
-}
-.highcharts-title {
-  fill: #D1E7FF !important;
-  font-size: 16px !important;
-}
-.highcharts-axis {
-  opacity: 0.5;
-}
-/* text {
-  color: #d1e7ff !important;
-  fill: #d1e7ff !important;
-  opacity: 0.5 !important;
-} */
-#start, #end, #datebtn {
+.confirm_button_style {
+  background: #4b607e;
   color: #D1E7FF;
-  background: linear-gradient(249.12deg, #272740 0%, #26263F 100%), #272741;
+  border: 0;
   border-radius: 8px;
 }
-#container {
-  width: 100%;
+#item_date, #datebtn_form, #datebtn, #start, #end, #accumulation_item_date, #accumulation_datebtn_form, #accumulation_datebtn_show, #accumulation_datebtn_add {
+  height: 38px;
+}
+#datebtn:hover, #datebtn_form:hover, #accumulation_datebtn_form:hover, #accumulation_datebtn_show:hover, #accumulation_datebtn_add:hover {
+  background-color: #384873;
+}
+.income_block {
+  -webkit-mask-image: radial-gradient(circle at right bottom, transparent 0, transparent 145px, black 150px);
+}
+.consumption_block {
+  -webkit-mask-image: radial-gradient(circle at left bottom, transparent 0, transparent 145px, black 150px);
+}
+.accumulation_block {
+  -webkit-mask-image: radial-gradient(circle at right top, transparent 0, transparent 145px, black 150px);
+}
+.cur_block {
+  -webkit-mask-image: radial-gradient(circle at left top, transparent 0, transparent 145px, black 150px);
+}
+.cur_block_name, .income_block_name, .accumulation_block_name, .consumption_block_name {
+  border-bottom: 2px solid #201E33;
+}
+.detailed_rate_block_USD, .detailed_rate_block_EURO, .accumulation_US {
+  border-right: 2px solid rgba(56, 58, 83, 1);
+}
+.sub_center_block { /* надо подумать */
+ position: absolute;
+ left: calc(100% - 57.8%);
+ top: calc(100% - 31%);
+ height: 300px;
+ max-width: 300px;
+ border: solid 10px;
+ border-color: #6498EC;
+ border-radius: 300px;
+}
+.highcharts-legend-item text {
+  fill: #D1E7FF !important;
+  opacity: 0.5;
+  font-weight: normal !important;
+}
+#amount_last_purchase_US, #amount_last_purchase_EU {
+  color: #2BF499;
+  font-size: 24px;
+}
+.sub_center_block_content {
+  opacity: 0.5;
+}
+#accumulation_US, #accumulation_EU, #recurrent_expenses, #current_balance {
+  font-size: 28px;
+}
+#accumulation_US {
+  color: #776FE4;
+}
+#accumulation_EU {
+  color: #EC7F69;
+}
+#recurrent_expenses {
+  color: #EC4A2A;
+}
+#current_balance {
+  color: #2BF499;  
+}
+.enter_date {
+  color: #D1E7FF;
+  background: rgba(39, 39, 64, 1);
+  border: 1px solid rgba(56, 58, 83, 1);
+  border-radius: 8px;
 }
