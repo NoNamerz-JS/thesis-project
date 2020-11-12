@@ -1,3 +1,7 @@
+function start_end_set() {
+  document.getElementById("start").value = dayjs().subtract(1, 'month').format('YYYY-MM-DD');
+  document.getElementById("end").value = dayjs().format('YYYY-MM-DD');
+}
 function start_highcharts() {
   let month_ago = dayjs().subtract(1, 'month').format('YYYY-MM-DD');
   let today = dayjs().format('YYYY-MM-DD');
@@ -26,16 +30,38 @@ function start_highcharts() {
   function chart (categories, data) {
   	Highcharts.chart('container', {
   					chart: {
-  								zoomType: 'x'
+  								zoomType: 'x',
+                  backgroundColor: 'none'
   						},
           	title: {
               text: ''
           	},
+            exporting: {
+      		    enabled: false
+      		  },
+            credits: {
+              enabled: false
+            },
           	xAxis: {
+              labels: {
+    						style: {
+    							color: 'rgba(209, 231, 255, 0.5)',
+                  fontWeight: 'normal'
+    						}
+    					},
           		categories,
           	},
           	yAxis: {
+              labels: {
+    						style: {
+    							color: 'rgba(209, 231, 255, 0.5)'
+    						}
+    					},
+              gridLineColor: 'rgba(209, 231, 255, 0.1)',
           		title: {
+                style: {
+    							color: 'rgba(209, 231, 255, 0.5)',
+    						},
           			text: 'rate'
          		 	}
           	},
@@ -54,7 +80,7 @@ function start_highcharts() {
                           ]
                       },
                       marker: {
-                          radius: 1
+                          radius: 0
                       },
                       lineWidth: 1,
                       states: {
@@ -67,7 +93,7 @@ function start_highcharts() {
               },
           	series: [{
   						type: 'area',
-          		name: '',
+          		name: 'Rate',
               		data,
 
           	}]

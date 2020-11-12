@@ -1,11 +1,15 @@
-function to_localStorage_inc_cons() {
-	if (document.getElementById("item_date").value == ''){
-		alert('You have not entered a date!');
-	}
-	else if (document.getElementById("Amount").value == ''){
-		alert('You have not entered the amount!');
-	}
-	else if ((JSON.stringify(localStorage.getItem('obj')).toString().includes(document.getElementById("item_date").value) == true) && document.getElementById("inc_selected").selected) {
+function checkParams() {
+    const it = document.getElementById("item_date").value;
+    const am = document.getElementById("Amount").value;
+    if(it.length != 0 && am.length != 0) {
+        $('#datebtn_form').removeAttr('disabled');
+    } else {
+        $('#datebtn_form').attr('disabled', 'disabled');
+    }
+}
+
+function to_localStorage_inc_cons() {	
+	if ((JSON.stringify(localStorage.getItem('obj')).toString().includes(document.getElementById("item_date").value) == true) && document.getElementById("inc_selected").selected) {
 		alert('You have already entered the data for this day!');
 	}
 	else if ((JSON.stringify(localStorage.getItem('obj_cons')).toString().includes(document.getElementById("item_date").value) == true) && document.getElementById("cons_selected").selected){
