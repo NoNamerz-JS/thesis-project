@@ -5,8 +5,42 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 # Unreleased
-## Current version: v0.1.0
+## Current version: v0.4.0
 
+## [0.4.0] - 2020-12-01
+### Added
+- Pie chart.
+- Consumption detailing block behavior.
+
+### Changed
+- Element styles.
+- Graph behavior.
+- Input field behavior.
+- Some bugs fixed.
+-------
+## [0.3.0] - 2020-11-12
+### Added
+- Displaying information in the central unit.
+- Accumulation block.
+
+### Changed
+- Element styles.
+- Graph behavior.
+- Input field behavior.
+- Some bugs fixed.
+-------
+## [0.2.0] - 2020-10-26
+### Added
+- Income and consumption graph.
+- Entering income and consumption data.
+- Script for saving entered income and expense data in storage.
+- Script for graph of income and consumption.
+- Work has begun on the accumulation block.
+
+### Changed
+- Element styles.
+- Block names.
+-------
 ## [0.1.0] - 2020-10-14
 ### Added
 - Information blocks.
@@ -24,17 +58,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.1] - 2020-09-10
 ### Added
 - Painted the page red.
-
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...v1.0.0
-[0.3.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.8...v0.1.0
-[0.0.8]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.7...v0.0.8
-[0.0.7]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.6...v0.0.7
-[0.0.6]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.5...v0.0.6
-[0.0.5]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.4...v0.0.5
-[0.0.4]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.3...v0.0.4
-[0.0.3]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.2...v0.0.3
-[0.0.2]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.0.2
-[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
