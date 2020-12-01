@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="CSS/thesis.css">
   <title>Thesis_project</title>
 </head>
-<body onload="startTime(); start_end_set(); start_highcharts(); inc_con(); acc_highcharts(); last_purchase()">
+<body onload="startTime(); start_end_set(); start_highcharts(); inc_con(); acc_highcharts(); last_purchase(); category_cons();">
 <div class="container-fluid p-0 m-0">
   <div class="header row ml-5 mr-5 mt-4 mb-2 pt-3 pb-3">
     <div class="col">
@@ -16,28 +16,36 @@
     <div class="date_and_time col"></div>
     <div class="menu col text-right">menu</div>
   </div>
-  <div class="five_blocks-fluid pt-2 pb-2">
+  <div class="five_blocks pt-2 pb-2">
     <div class="row ml-5 mr-5 mt-2 mb-2">
-      <div class="income_block col mb-3 mr-2 pt-3 pb-3">
+      <div class="income_block col-lg mb-3 mr-2 pt-3 pb-3">
         <div class="income_block_name row pb-3 pl-3 pr-0">income/consumption</div>
         <div class="input_income_consuption mt-4">
           <div class="ml-2">Adding an amount of income and consumption</div>
           <div class="row mt-3 mb-3 ml-1">
             <input type="date" id="item_date" name="trip-start" onkeyup="checkParams()" class="enter_date mr-4 col-3" max>
-            <input type="number" id="Amount" onkeyup="checkParams()" class="form-control col-2 enter_date row" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping">
+            <input type="number" id="Amount" value="${cpCon.receiveNo}" required tabindex="34" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off onkeyup="checkParams()" class="form-control col-2 enter_date row" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping">
             <div class="form-group col-2 ml-4 p-0">
               <select id="inputState" class="form-control enter_date" value="">
                 <option id="inc_selected" selected>Income</option>
                 <option id="cons_selected">Consumption</option>
               </select>
             </div>
-            <!-- <div class="form-group col-2 ml-2 p-0">
-              <select id="inputCategory" class="form-control enter_date">
-                <option selected>Category</option>
-                <option>bla</option>
+            <div id="inputCategory_container" class="form-group inputCategory_hidden col-2 ml-2 p-0">
+              <select id="inputCategory" class="form-control enter_date" required>
+                <option hidden="">Category</option>
+                <option>Food</option>
+                <option>Payments</option>
+                <option>Public transport</option>
+                <option>Car</option>
+                <option>Sport</option>
+                <option>Entertainment</option>
+                <option>Personal care</option>
+                <option>Presents</option>
+                <option>Other</option>
               </select>
-            </div> -->
-            <input type="button" OnClick="to_localStorage_inc_cons()" id="datebtn_form" value="submit" class="confirm_button_style col-2 ml-2" disabled>
+            </div>
+            <input type="button" OnClick="to_localStorage_inc_cons(); inc_con(); category_cons()"  id="datebtn_form" value="submit" class="confirm_button_style col-2 ml-2" disabled>
           </div>
         </div>
         <div class="row mb-3 ml-2">
@@ -53,105 +61,151 @@
           <div id="container_form" class="col-11"></div>
         </figure>
       </div>
-      <div class="consumption_block col ml-2 mb-3 pt-3 pb-3">
+      <div class="consumption_block col-lg ml-2 mb-3 pt-3 pb-3">
         <div class="consumption_block_name justify-content-end row pb-3 pr-3">consumption</div>
-      </div>
-      <div class="w-100 center_block">
-        <div class="sub_center_block text-center col-1 m-0 p-0">
-          <div id="current_balance" class="pt-3">summ</div>
-          <div class="sub_center_block_content">Current balance</div>
-          <div id="recurrent_expenses"></div>
-          <div class="sub_center_block_content">Recurrent expenses per month</div>
-          <div id="accumulation_US">summ</div>
-          <div id="accumulation_EU">summ</div>
-          <div class="sub_center_block_content">Accumulation</div>
+        <div class="row">
+          <div id="target" class="target_for_pie col-4">
+            <ul>
+              <li><a id="food" class="separator" href="#"><span class="dot pr-1">&#8226;</span>Food</a></li>
+              <li><a id="payments" href="#"><span class="dot pr-1">&#8226;</span>Payments</a></li>
+              <li><a id="public_transport" href="#"><span class="dot pr-1">&#8226;</span>Public transport</a></li>
+              <li><a id="car" href="#"><span class="dot pr-1">&#8226;</span>Car</a></li>
+              <li><a id="sport" href="#"><span class="dot pr-1">&#8226;</span>Sport</a></li>
+              <li><a id="entertainment" href="#"><span class="dot pr-1">&#8226;</span>Entertainment</a></li>
+              <li><a id="personal_care" href="#"><span class="dot pr-1">&#8226;</span>Personal care</a></li>
+              <li><a id="presents" href="#"><span class="dot pr-1">&#8226;</span>Presents</a></li>
+              <li><a id="other" href="#"><span class="dot pr-1">&#8226;</span>Other</a></li>
+            </ul>
+          </div>
+          <div id="show_state" class="show_state ml-5 mt-5 col-3">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="249" height="252" fill="none" style="">
+                <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+                <mask id="path-2-outside-1" maskUnits="userSpaceOnUse" x="121" y="0" width="123" height="105" fill="black">
+                <rect fill="white" x="121" width="123" height="105" id="svg_1"/>
+                <path d="M124.5 3C149.033 3 173.02 10.2483 193.448 23.8348C213.875 37.4213 229.834 56.7403 239.319 79.3659L188.799 100.545C183.487 87.8745 174.55 77.0559 163.111 69.4475C151.671 61.8391 138.239 57.78 124.5 57.78V3Z" id="svg_2"/>
+                </mask>
+                <defs>
+                <linearGradient id="paint0_linear" x1="0.42369431257247925" y1="-0.0823289304971695" x2="1.018071174621582" y2="0.3192773163318634">
+                <stop stop-color="white" stop-opacity="0.94"/>
+                <stop offset="0.510417" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="paint1_linear" x1="-0.21773399412631989" y1="0.1025167927145958" x2="0.9710936546325684" y2="0.7842534184455872">
+                <stop stop-color="#DEE2EB"/>
+                <stop offset="1" stop-color="#4A5F92"/>
+                </linearGradient>
+                </defs>
+                <g class="currentLayer" style=""><title>Layer 1</title>
+                <path d="M131.575 9.43678C131.781 6.00497 129.164 3.03989 125.726 3.00597C100.103 2.75319 74.9687 10.416 53.7948 25.0255C30.9094 40.8159 13.9684 63.8126 5.6718 90.3502C-2.62478 116.888 -1.79934 145.439 8.01655 171.453C17.8324 197.467 36.0738 219.446 59.8332 233.888C83.5927 248.33 111.503 254.403 139.115 251.139C166.727 247.875 192.452 235.463 212.189 215.879C231.927 196.296 244.541 170.669 248.021 143.083C251.241 117.561 246.47 91.7205 234.449 69.0917C232.836 66.0556 228.999 65.098 226.047 66.8606C223.096 68.6233 222.148 72.438 223.744 75.4831C234.35 95.717 238.541 118.761 235.669 141.525C232.537 166.352 221.184 189.416 203.42 207.041C185.656 224.666 162.504 235.838 137.653 238.775C112.802 241.713 87.6834 236.247 66.2999 223.249C44.9164 210.252 28.4992 190.47 19.6649 167.058C10.8306 143.645 10.0877 117.949 17.5546 94.0652C25.0215 70.1813 40.2685 49.4843 60.8653 35.2729C79.7503 22.2427 102.136 15.3525 124.981 15.451C128.419 15.4658 131.369 12.8686 131.575 9.43678Z" fill="#6184C8" fill-opacity="0.6" id="svg_3"/>
+                <path d="M131.575 9.43678C131.781 6.00497 129.164 3.03989 125.726 3.00597C100.103 2.75319 74.9687 10.416 53.7948 25.0255C30.9094 40.8159 13.9684 63.8126 5.6718 90.3502C-2.62478 116.888 -1.79934 145.439 8.01655 171.453C17.8324 197.467 36.0738 219.446 59.8332 233.888C83.5927 248.33 111.503 254.403 139.115 251.139C166.727 247.875 192.452 235.463 212.189 215.879C231.927 196.296 244.541 170.669 248.021 143.083C251.241 117.561 246.47 91.7205 234.449 69.0917C232.836 66.0556 228.999 65.098 226.047 66.8606C223.096 68.6233 222.148 72.438 223.744 75.4831C234.35 95.717 238.541 118.761 235.669 141.525C232.537 166.352 221.184 189.416 203.42 207.041C185.656 224.666 162.504 235.838 137.653 238.775C112.802 241.713 87.6834 236.247 66.2999 223.249C44.9164 210.252 28.4992 190.47 19.6649 167.058C10.8306 143.645 10.0877 117.949 17.5546 94.0652C25.0215 70.1813 40.2685 49.4843 60.8653 35.2729C79.7503 22.2427 102.136 15.3525 124.981 15.451C128.419 15.4658 131.369 12.8686 131.575 9.43678Z" fill="url(#paint0_linear)" id="svg_4"/><path d="M124.5 3C149.033 3 173.02 10.2483 193.448 23.8348C213.875 37.4213 229.834 56.7403 239.319 79.3659L188.799 100.545C183.487 87.8745 174.55 77.0559 163.111 69.4475C151.671 61.8391 138.239 57.78 124.5 57.78V3Z" fill="#729CEA" fill-opacity="0.6" id="svg_5"/><path d="M124.5 3C149.033 3 173.02 10.2483 193.448 23.8348C213.875 37.4213 229.834 56.7403 239.319 79.3659L188.799 100.545C183.487 87.8745 174.55 77.0559 163.111 69.4475C151.671 61.8391 138.239 57.78 124.5 57.78V3Z" fill="url(#paint1_linear)" id="svg_6"/>
+                <path d="M124.5 3C149.033 3 173.02 10.2483 193.448 23.8348C213.875 37.4213 229.834 56.7403 239.319 79.3659L188.799 100.545C183.487 87.8745 174.55 77.0559 163.111 69.4475C151.671 61.8391 138.239 57.78 124.5 57.78V3Z" stroke="#272741" stroke-width="6" mask="url(#path-2-outside-1)" id="svg_7" class=""/>
+                <foreignObject fill="#ecabab" fill-opacity="0.6" stroke="#272741" stroke-width="6" stroke-dashoffset="" fill-rule="nonzero" font-size="20" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_11" x="50" y="114.12244987487793" width="140" height="41" style="color: rgba(209, 231, 255, 0.9); text-align: center;" class="">
+                <p id="mid_text_svg" xmlns="http://www.w3.org/1999/xhtml" style="border: none;outline: none;font-size: inherit;line-height: 1em;padding:0;margin:0;"></p></foreignObject>
+                <foreignObject fill="#ecabab" fill-opacity="0.6" stroke="#272741" stroke-width="6" stroke-dashoffset="" fill-rule="nonzero" font-size="12" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_13" x="45" y="142" width="150" height="50" style="color: rgba(209, 231, 255, 0.5); text-align: center;" class="">
+                <p id="down_text_svg" xmlns="http://www.w3.org/1999/xhtml" style="border: none;outline: none;font-size: inherit;line-height: 1em;padding:0;margin:0;">Consumption amounted to: </p><span id="summ_cons"></span></foreignObject>
+                  <foreignObject fill="#ecabab" fill-opacity="0.6" stroke="#272741" stroke-width="6" stroke-dashoffset="" fill-rule="nonzero" font-size="20" font-family="Georgia, serif" letter-spacing="0" word-spacing="0" marker-start="" marker-mid="" marker-end="" id="svg_19" x="20" y="60" width="86" height="58" style="color: #272740; text-align: center;" class="" transform="rotate(38.242916107177734 150.21089172363264,231.61904907226568) ">
+                  <p id="top_text_svg" xmlns="http://www.w3.org/1999/xhtml" style="border: none;outline: none;font-size: inherit;line-height: 1em;padding:0;margin:0;"></p></foreignObject></g></svg>
+                </div>
+              </div>
+              <figure id="display_pie" class="highcharts-figure pie_chart-figure col justify-content-top">
+                <div id="pie_chart" class="pie_chart"></div>
+              </figure>
+            </div>
+          </div>
+        <div class="w-100 center_block d-flex justify-content-center">
+          <div class="sub_center_block text-center col-1 m-0 p-0">
+            <div id="current_balance" class="pt-3">summ</div>
+            <div class="sub_center_block_content">Current balance</div>
+            <div id="recurrent_expenses"></div>
+            <div class="sub_center_block_content">Recurrent expenses per month</div>
+            <div id="accumulation_US">summ</div>
+            <div id="accumulation_EU">summ</div>
+            <div class="sub_center_block_content">Accumulation</div>
+          </div>
         </div>
-      </div>
-      <div class="accumulation_block col mr-2 pt-3 pb-3">
-        <div class="accumulation_block_name row pb-3 pl-3 pr-0">accumulation</div>
-        <div class="accumulation_all_currency row ml-2 mt-4">
-          <div class="accumulation_US pr-5">U.S. dollar
-            <div class="w-100 mb-2"></div>
-            <div class="data_US_block row ml-0">
-              <div id="data_last_purchase_US" class="pt-2 mr-2"></div>
-              <div id="amount_last_purchase_US" class="mr-2"></div>
-              <!-- <div>Rate</div> -->
+        <div class="accumulation_block col-lg mr-2 pt-3 pb-3">
+          <div class="accumulation_block_name row pb-3 pl-3 pr-0">accumulation</div>
+          <div class="accumulation_all_currency row ml-2 mt-4">
+            <div class="accumulation_US pr-5">U.S. dollar
+              <div class="w-100 mb-2"></div>
+              <div class="data_US_block row ml-0">
+                <div id="data_last_purchase_US" class="pt-2 mr-2"></div>
+                <div id="amount_last_purchase_US" class="mr-2"></div>
+              </div>
+            </div>
+            <div class="accumulation_EURO ml-5">EURO
+              <div class="w-100 mb-2"></div>
+              <div class="row ml-0">
+                <div id="data_last_purchase_EU" class="pt-2 mr-2"></div>
+                <div id="amount_last_purchase_EU" class="mr-2"></div>
+              </div>
             </div>
           </div>
-          <div class="accumulation_EURO ml-5">EURO
-            <div class="w-100 mb-2"></div>
-            <div class="row ml-0">
-              <div id="data_last_purchase_EU" class="pt-2 mr-2"></div>
-              <div id="amount_last_purchase_EU" class="mr-2"></div>
-              <!-- <div>Rate</div> -->
+          <div class="row mt-3 mb-3 ml-1">
+              <input type="month" id="accumulation_item_date" onkeyup="checkParamsCur()" name="trip-start" class="enter_date mr-4 col-3">
+              <input type="number" id="accumulation_Amount" min="0" value="${cpCon.receiveNo}" required tabindex="34" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off onkeyup="checkParamsCur()" class="form-control col-2 enter_date row" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping">
+              <div class="form-group col-2 mb-3 ml-4 p-0">
+                <select id="accumulation_inputState" class="form-control enter_date">
+                  <option id="accumulation_selected_US" selected="">U.S. dollar</option>
+                  <option id="accumulation_selected_EU">EURO</option>
+                </select>
+              </div>
+              <input type="button" onclick="to_localStorage_acc(); last_purchase(); acc_highcharts();" id="accumulation_datebtn_add" value="add" class="confirm_button_style col-2 ml-2" disabled>
+              <div class="w-100"></div>
+              <!-- <input type="month" class="enter_date mr-2 col-3" id="acc_month_start" name="acc_month">
+              <input type="month" class="enter_date mr-2 col-3" id="acc_month_end" name="acc_month">
+              <input type="button" onclick="acc_highcharts()" id="accumulation_datebtn_show" value="show" class="confirm_button_style col-2 ml-0"> -->
+            </div>
+          <figure class="highcharts-figure row">
+            <div id="accumulation_container" class="col-11"></div>
+          </figure>
+        </div>
+        <div class="cur_block col-lg ml-2 pt-3 pb-3">
+        <div class="cur_block_name row pb-3 pr-3 justify-content-end">exchange rates</div>
+        <div class="radio_cur row ml-5">
+        <div class="w-100"></div>
+          <div class="col">
+          <div class="detailed_rate_block pb-4 row justify-content-end">
+            <div class="detailed_rate_block_USD mt-4 row justify-content-center">U.S. dollar
+              <div class="w-100 mb-2"></div>
+              <div id="detailed_rate_block_USD_info" class="detailed_rate_block_style"></div>
+              <sup id="difference_rate_USD"></sup>
+            </div>
+            <div class="detailed_rate_block_EURO mt-4 pl-4 row justify-content-center">EURO
+              <div class="w-100 mb-2"></div>
+                <div id="detailed_rate_block_EURO_info" class="detailed_rate_block_style"></div>
+                <sup id="difference_rate_EURO"></sup>
+            </div>
+            <div class="detailed_rate_block_RUB mt-4 pl-3 mr-5 row justify-content-center">100 RUB
+              <div class="w-100 mb-2"></div>
+                <div id="detailed_rate_block_RUB_info" class="detailed_rate_block_style"></div>
+                <sup id="difference_rate_RUB"></sup>
             </div>
           </div>
         </div>
-        <div class="row mt-3 mb-3 ml-1">
-            <input type="month" id="accumulation_item_date" onkeyup="checkParamsCur()" name="trip-start" class="enter_date mr-4 col-3">
-            <input type="number" id="accumulation_Amount" onkeyup="checkParamsCur()" class="form-control col-2 enter_date row" placeholder="Amount" aria-label="Amount" aria-describedby="addon-wrapping">
-            <div class="form-group col-2 mb-3 ml-4 p-0">
-              <select id="accumulation_inputState" class="form-control enter_date">
-                <option id="accumulation_selected_US" selected="">U.S. dollar</option>
-                <option id="accumulation_selected_EU">EURO</option>
-              </select>
-            </div>
-            <input type="button" onclick="to_localStorage_acc(); last_purchase()" id="accumulation_datebtn_add" value="add" class="confirm_button_style col-2 ml-2" disabled>
-            <div class="w-100"></div>
-            <input type="month" class="enter_date mr-2 col-3" id="acc_month_start" name="acc_month">
-            <input type="month" class="enter_date mr-2 col-3" id="acc_month_end" name="acc_month">
-            <input type="button" onclick="acc_highcharts()" id="accumulation_datebtn_show" value="show" class="confirm_button_style col-2 ml-0">
-          </div>
+        <div class="w-100"></div>
+        <form name="all_cur" class="mb-2">
+          <input type="radio" OnClick="start_highcharts()" id="US" name="currency" value="145" checked>
+          <label for="US">U.S. dollar</label>
+          <input type="radio" OnClick="start_highcharts()" id="EU" name="currency" value="292">
+          <label for="EU">EURO</label>
+          <input type="radio" OnClick="start_highcharts()" id="RUB" name="currency" value="298">
+          <label for="RUB">100 RUB</label>
+        </form>
+      </div>
+        <div class="date_range text-left ml-5 mt-0 mb-3">
+          <label for="start">Start date:</label>
+          <input type="date" id="start" name="trip-start" class="enter_date col-3" value="">
+          <label for="start">End date:</label>
+          <input type="date" id="end" name="trip-end" class="enter_date col-3" value="">
+          <input type="button" OnClick="start_highcharts()" id="datebtn" value="submit" class="confirm_button_style col-2 ml-2">
+        </div>
         <figure class="highcharts-figure row">
-          <div id="accumulation_container" class="col-11"></div>
+          <div id="container" class="col-11"></div>
         </figure>
       </div>
-  <div class="cur_block col ml-2 pt-3 pb-3">
-    <div class="cur_block_name row pb-3 pr-3 justify-content-end">exchange rates</div>
-    <div class="radio_cur row ml-5">
-      <div class="w-100"></div>
-        <div class="col">
-        <div class="detailed_rate_block pb-4 row justify-content-end">
-          <div class="detailed_rate_block_USD mt-4 row justify-content-center">U.S. dollar
-            <div class="w-100 mb-2"></div>
-            <div id="detailed_rate_block_USD_info" class="detailed_rate_block_style"></div>
-            <sup id="difference_rate_USD"></sup>
-          </div>
-          <div class="detailed_rate_block_EURO mt-4 pl-4 row justify-content-center">EURO
-            <div class="w-100 mb-2"></div>
-              <div id="detailed_rate_block_EURO_info" class="detailed_rate_block_style"></div>
-              <sup id="difference_rate_EURO"></sup>
-          </div>
-          <div class="detailed_rate_block_RUB mt-4 pl-3 mr-5 row justify-content-center">100 RUB
-            <div class="w-100 mb-2"></div>
-              <div id="detailed_rate_block_RUB_info" class="detailed_rate_block_style"></div>
-              <sup id="difference_rate_RUB"></sup>
-          </div>
-        </div>
-      </div>
-      <div class="w-100"></div>
-      <form name="all_cur" class="mb-2">
-        <input type="radio" OnClick="start_highcharts()" id="US" name="currency" value="145" checked>
-        <label for="US">U.S. dollar</label>
-        <input type="radio" OnClick="start_highcharts()" id="EU" name="currency" value="292">
-        <label for="EU">EURO</label>
-        <input type="radio" OnClick="start_highcharts()" id="RUB" name="currency" value="298">
-        <label for="RUB">100 RUB</label>
-      </form>
     </div>
-  <div class="date_range text-left ml-5 mt-0 mb-3">
-    <label for="start">Start date:</label>
-    <input type="date" id="start" name="trip-start" class="enter_date col-3" value="">
-    <label for="start">End date:</label>
-    <input type="date" id="end" name="trip-end" class="enter_date col-3" value="">
-    <input type="button" OnClick="start_highcharts()" id="datebtn" value="submit" class="confirm_button_style col-2 ml-2">
   </div>
-  <figure class="highcharts-figure row">
-    <div id="container" class="col-11"></div>
-  </figure>
-  </div>
-</div>
-</div>
 </div>
 <script src='https://cdn.jsdelivr.net/g/lodash@4(lodash.min.js+lodash.fp.min.js)'></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -169,7 +223,9 @@
 <script src="JavaScript/Highcharts_inc_cons.js"></script>
 <script src="JavaScript/last_purchase.js"></script>
 <script src="JavaScript/Cur_rates.js"></script>
-<script src="JavaScript/all_stat.js"></script>
+<script src="JavaScript/pie_chart.js"></script>
+<script src="JavaScript/expense_detailing.js"></script>
+<script src="JavaScript/input_block.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>

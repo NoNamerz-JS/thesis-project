@@ -8,12 +8,11 @@ function mapper(commits) {
 	const cur_id = commits.map(element => {
 		return element.Cur_ID
 	});
-	return { date, rate, cur_id };	
+	return { date, rate, cur_id };
 }
-
 onmessage = function(e) {
 	fetch(e.data)
-    		.then(response => response.json())
-        .then(mapper)
-				.then(postMessage);
+	.then(response => response.json())
+	.then(mapper)
+	.then(postMessage);
 }
